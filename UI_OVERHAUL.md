@@ -62,6 +62,38 @@ and sound hooks, variants, and focus/disabled/loading states.
 
 ---
 
+## Cinematic Landing — the Mostar rig, re-themed for Lear
+
+The app now opens on a **cinematic scroll landing** (`components/fx/CinematicLanding.tsx`
++ `.css`) that is a faithful port of the reference "Mostar city" cinematic-scroll
+rig — **identical geometry and math**: a `position:sticky` stage over a
+`100vh + 3700px` scroll track, per-frame `smoothstep` / `lerp` / `segmentInOut`
+choreography, pointer parallax, a counter-scaled (`1 / backScale`) capability
+slider, and a seamless **3-set infinite carousel** with instant-jump normalization.
+
+Every layer and string is Lear/AI, not Mostar:
+
+| Reference layer | Lear plate (generated, screen-composited on black) | Meaning |
+|---|---|---|
+| Sky | `backdrop-nebula.png` | AI data nebula |
+| Back "four" glow | `lear-core.png` | the reasoning core |
+| Bazaar mid | `lear-city.png` | the observed infrastructure city |
+| Splitframe L/R | `lear-monolith.png` (mirrored) | portal that parts on scroll |
+| Bridge foreground | `lear-bridge.png` | **bridge of light** = signal → diagnosis → action |
+| Frame-two close-up | `lear-frame2.png` | reactor core reveal |
+
+- Hero title **LEAR** (gradient), intro copy about the local-first agent, two story
+  panels ("Lear reads the whole system." → "Then it acts — not just alerts."), a
+  facts strip, and a 5-card capability carousel (Observe / Understand / Act /
+  Connect / Ask) with lucide icons.
+- **Hands off into the real app:** the header **Enter Console** button, the nav
+  "Console" link, and the final CTA all call `onEnter`, which the app gate
+  (`App.tsx`) uses to reveal the working shell (Wizard/Dashboard). The landing is
+  shown on each fresh load, skipped for the rest of the session once entered, and
+  bypassed for deep links (`?tab=`, `?session=`, `?skipIntro`).
+- Honors `prefers-reduced-motion` (snaps, no inertia/parallax). Runs on the same
+  single rAF discipline as the reference for a smooth scrub.
+
 ## New immersive layer (this pass)
 
 The cinematic z-stack, back → front:

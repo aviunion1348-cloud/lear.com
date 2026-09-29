@@ -16,6 +16,7 @@ import SoundManager from './components/fx/SoundManager';
 import LiveVideoBackdrop from './components/fx/LiveVideoBackdrop';
 import AtmosphereOverlay from './components/fx/AtmosphereOverlay';
 import PerfOverlay from './components/fx/PerfOverlay';
+import CinematicLanding from './components/fx/CinematicLanding';
 import { LearProvider, useLear } from './context/LearContext';
 import { logAnimationRegistry } from './lib/animationRegistry';
 import { SFX_COUNT } from './lib/soundEngine';
@@ -23,6 +24,20 @@ import { SFX_COUNT } from './lib/soundEngine';
 function AppContent() {
   const [isSetupComplete, setIsSetupComplete] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
+  // Cinematic landing gate — shown on each fresh load, skipped once entered
+  // within a session and bypassed when a deep-link (?tab= / ?session=) is used.
+  const [showLanding, setShowLanding] = useState<boolean>(() => {
+    try {
+      if (sessionStorage.getItem('lear.landing.seen') === '1') return false;
+      const p = new URLSearchParams(window.location.search);
+      if (p.get('tab') || p.get('session') || p.get('skipIntro')) return false;
+    } catch { /* noop */ }
+    return true;
+  });
+  const enterConsole = () => {
+    try { sessionStorage.setItem('lear.landing.seen', '1'); } catch { /* noop */ }
+    setShowLanding(false);
+  };
 
   const {
     activeTab,
@@ -71,6 +86,10 @@ function AppContent() {
     checkConfig();
     refreshProjects();
   };
+
+  if (showLanding) {
+    return <CinematicLanding onEnter={enterConsole} />;
+  }
 
   if (loading) {
     return (

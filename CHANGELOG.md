@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- **Desktop Feature 19 — Cinematic Scroll Landing (Mostar rig re-themed for Lear)**:
+  - New `components/fx/CinematicLanding.tsx` + `CinematicLanding.css` — a faithful port of the reference "Mostar city" cinematic-scroll engine (sticky `100vh + 3700px` stage, per-frame `smoothstep`/`lerp`/`segmentInOut` choreography, pointer parallax, counter-scaled `1/backScale` slider, seamless 3-set infinite carousel with instant-jump normalization, single rAF loop, reduced-motion fallback) — re-skinned entirely for Lear/AI.
+  - Six generated, on-brand scene plates rendered on black and `mix-blend-mode:screen`-composited (`public/media/lear-bridge.png` "bridge of light", `lear-city.png`, `lear-core.png`, `lear-monolith.png`, `lear-frame2.png`, over `backdrop-nebula.png`).
+  - Content: LEAR gradient hero, local-first intro, two story panels ("reads the whole system" → "acts, not just alerts"), a facts strip, and a 5-card capability carousel (Observe/Understand/Act/Connect/Ask). Header **Enter Console** / nav Console / final CTA hand off into the real Wizard/Dashboard via an `App.tsx` gate (shown per fresh load, skipped after entering in-session, bypassed for `?tab=`/`?session=`/`?skipIntro` deep links). Backend/DB untouched.
 - **Desktop Feature 18 — Immersive Premium UI (cinematic backdrop, atmosphere, perf HUD, expanded motion/sound registries)**:
   - *Live Video Backdrop (`components/fx/LiveVideoBackdrop.tsx`)*: A brightened (1.18×), scrimmed cinematic underlay at `z:-11` that counters flat-black. Plays a real looped video if `desktop/public/media/video-hero.webm|mp4` is present; otherwise cross-fades premium generated brand plates (`public/media/backdrop-nebula.png`, `backdrop-grid.png`) with a slow Ken-Burns drift — GPU-only, off-screen/hidden-tab paused, static under reduced-motion.
   - *Atmosphere Overlay (`components/fx/AtmosphereOverlay.tsx`)*: Always-on cinema "film" at `z:90` — inline-SVG film grain, vignette, HUD scanlines, and a slow diagonal light sweep; `pointer-events:none`, reduced-motion aware.
