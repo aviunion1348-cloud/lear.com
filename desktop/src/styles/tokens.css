@@ -1,0 +1,211 @@
+/* =============================================================================
+   LEAR DESIGN TOKENS — U-01 "Design system audit and token overhaul"
+   -----------------------------------------------------------------------------
+   Single source of truth for the Lear desktop visual language.
+
+   Layers:
+     1. @theme        → Tailwind v4 utility-namespace tokens (bg-*, text-*, …)
+     2. :root         → raw primitives consumed by hand-written CSS / canvas / JS
+     3. Semantic maps → connector-state → color, so status is never hard-coded
+
+   Scales defined here (do not bypass with magic values in components):
+     spacing | typography | color | elevation | radius | motion | blur | z-index
+   ========================================================================== */
+
+@theme {
+  /* ---- Typography families (Inter UI / Outfit display / JetBrains Mono code) */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Outfit", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---- Core surface ramp (existing tokens preserved verbatim) -------------- */
+  --color-background: #080b11;
+  --color-surface: #0e131f;
+  --color-surface-elevated: #151c2c;
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.16);
+
+  /* ---- Brand: neon pink ramp anchored on #FF3A89 ---------------------------- */
+  --color-accent: #ff3a89;
+  --color-accent-light: #ff66a5;
+  --color-accent-glow: rgba(255, 58, 137, 0.25);
+  --color-brand-50: #fff0f6;
+  --color-brand-100: #ffd6e7;
+  --color-brand-200: #ffadd0;
+  --color-brand-300: #ff7fb5;
+  --color-brand-400: #ff5c9d;
+  --color-brand-500: #ff3a89;
+  --color-brand-600: #e61e73;
+  --color-brand-700: #c40e60;
+  --color-brand-800: #9e0a4d;
+  --color-brand-900: #7a0b3d;
+  --color-brand-950: #4a0425;
+
+  /* ---- Secondary: intelligence violet + signal cyan -------------------------- */
+  --color-violet-300: #c4b5fd;
+  --color-violet-400: #a78bfa;
+  --color-violet-500: #8b5cf6;
+  --color-violet-600: #7c3aed;
+  --color-cyan: #06b6d4;
+  --color-cyan-300: #67e8f9;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-500: #06b6d4;
+
+  /* ---- Neutral scale (cool, blue-tinted for premium dark UI) ------------------ */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f4f6fb;
+  --color-neutral-100: #e7eaf3;
+  --color-neutral-200: #cdd3e1;
+  --color-neutral-300: #aab3c8;
+  --color-neutral-400: #8590ab;
+  --color-neutral-500: #64708c;
+  --color-neutral-600: #4b5468;
+  --color-neutral-700: #363d4d;
+  --color-neutral-800: #232936;
+  --color-neutral-900: #151a24;
+  --color-neutral-950: #0a0d14;
+
+  /* ---- Semantic / status (drives ALL state color — never hard-code) ---------- */
+  --color-success: #10b981;
+  --color-success-soft: rgba(16, 185, 129, 0.12);
+  --color-warning: #f59e0b;
+  --color-warning-soft: rgba(245, 158, 11, 0.12);
+  --color-danger: #f43f5e;
+  --color-danger-soft: rgba(244, 63, 94, 0.12);
+  --color-amber: #f59e0b;
+  --color-rose: #f43f5e;
+  --color-info: #38bdf8;
+  --color-info-soft: rgba(56, 189, 248, 0.12);
+
+  /* ---- Elevation / shadow system ---------------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(2, 6, 16, 0.4);
+  --shadow-sm: 0 2px 8px rgba(2, 6, 16, 0.45);
+  --shadow-md: 0 8px 24px rgba(2, 6, 16, 0.5);
+  --shadow-lg: 0 16px 48px rgba(2, 6, 16, 0.55);
+  --shadow-xl: 0 24px 64px rgba(2, 6, 16, 0.6);
+  --shadow-2xl: 0 32px 96px rgba(2, 6, 16, 0.65);
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --shadow-glow-brand: 0 0 24px rgba(255, 58, 137, 0.35), 0 0 64px rgba(255, 58, 137, 0.12);
+  --shadow-glow-cyan: 0 0 24px rgba(34, 211, 238, 0.3), 0 0 64px rgba(34, 211, 238, 0.1);
+  --shadow-glow-violet: 0 0 24px rgba(139, 92, 246, 0.32), 0 0 64px rgba(139, 92, 246, 0.12);
+  --shadow-glow-danger: 0 0 24px rgba(244, 63, 94, 0.32), 0 0 64px rgba(244, 63, 94, 0.12);
+  --shadow-glow-success: 0 0 24px rgba(16, 185, 129, 0.3), 0 0 64px rgba(16, 185, 129, 0.1);
+  --shadow-inner-hairline: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  /* ---- Border-radius scale ------------------------------------------------------ */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+
+  /* ---- Animation tokens exposed as `animate-*` utilities ------------------------- */
+  --animate-fade-in: fade-in 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-rise: rise 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-zoom-in: zoom-in 0.26s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2.4s ease-in-out infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.8s linear infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+  --animate-ping-slow: ping-ring 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-gradient-pan: gradient-pan 9s ease infinite;
+  --animate-scanline: scanline 7s linear infinite;
+  --animate-marquee: marquee 28s linear infinite;
+  --animate-blink: blink 1.2s steps(2, start) infinite;
+}
+
+/* =============================================================================
+   RAW PRIMITIVES — consumed by custom CSS, canvas renderers, inline styles
+   ========================================================================== */
+:root {
+  /* Brand anchors (JS-readable) */
+  --lear-brand: #ff3a89;
+  --lear-brand-rgb: 255, 58, 137;
+  --lear-violet-rgb: 139, 92, 246;
+  --lear-cyan-rgb: 34, 211, 238;
+  --lear-success-rgb: 16, 185, 129;
+  --lear-warning-rgb: 245, 158, 11;
+  --lear-danger-rgb: 244, 63, 94;
+
+  /* Spacing scale — 4px base, 1:4 geometric feel at the top end */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Typography scale (px) — fluid pairs: size / line-height */
+  --text-2xs: 11px;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 36px;
+  --text-5xl: 48px;
+  --text-6xl: 60px;
+  --text-7xl: 76px;
+  --text-8xl: 96px;
+  --text-hero: clamp(64px, 13vw, 180px);
+
+  /* Motion scale */
+  --dur-instant: 70ms;
+  --dur-fast: 140ms;
+  --dur-normal: 240ms;
+  --dur-slow: 480ms;
+  --dur-slower: 720ms;
+  --dur-cinematic: 1100ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-accelerate: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-swift: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Blur + glass */
+  --blur-glass: 16px;
+  --blur-heavy: 28px;
+
+  /* Z-index scale (app chrome) */
+  --z-background: -10;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-overlay: 40;
+  --z-drawer: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+  --z-tooltip: 80;
+
+  /* Signature gradients */
+  --gradient-brand: linear-gradient(135deg, #ff3a89 0%, #8b5cf6 55%, #22d3ee 115%);
+  --gradient-brand-soft: linear-gradient(135deg, rgba(255, 58, 137, 0.22), rgba(139, 92, 246, 0.14) 55%, rgba(34, 211, 238, 0.12));
+  --gradient-aurora: radial-gradient(120% 120% at 20% 0%, rgba(255, 58, 137, 0.16) 0%, rgba(139, 92, 246, 0.1) 40%, rgba(8, 11, 17, 0) 70%);
+  --gradient-danger: linear-gradient(135deg, rgba(244, 63, 94, 0.2), rgba(244, 63, 94, 0.06));
+}
+
+/* =============================================================================
+   SEMANTIC STATUS MAP — one place to rule connector/watcher/project states
+   ========================================================================== */
+:root {
+  --status-healthy: var(--color-success);
+  --status-degraded: var(--color-warning);
+  --status-error: var(--color-danger);
+  --status-deploying: var(--color-info);
+  --status-unknown: #64708c;
+}
